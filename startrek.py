@@ -7,11 +7,8 @@
 
 from math import atan2, pi, sqrt, cos, sin
 import random
-
-# import strings
 import os
 from time import sleep
-
 
 commandStrings = [
     "--- Commands -----------------",
@@ -40,7 +37,6 @@ computerStrings = [
 class Quadrant():
 
     def __init__(self):
-#        self.name = ""
         self.klingons = 0
         self.stars = 0
         self.starbase = False
@@ -791,17 +787,17 @@ def print_sector(quadrant):
         game.condition = "Y"
 
     sb = "│"
-    print "  1  2  3  4  5  6  7  8"
-    print "┌────────────────────────┐ "
-    print_sector_row(sb, 0, "│ 1  STARDATE {0}".format(game.star_date))
-    print_sector_row(sb, 1, "│ 2  CONDITION {0}".format(game.condition))
-    print_sector_row(sb, 2, "│ 3  QUAD.   {0},{1}".format(game.quadrant_x + 1, game.quadrant_y + 1))
-    print_sector_row(sb, 3, "│ 4  SECTOR  {0},{1}".format(game.sector_x + 1, game.sector_y + 1))
-    print_sector_row(sb, 4, "│ 5  ENERGY {0}".format(game.energy))
-    print_sector_row(sb, 5, "│ 6  P.TORP  {0}".format(game.photon_torpedoes))
-    print_sector_row(sb, 6, "│ 7  SHIELDS {0}".format(game.shield_level))
-    print_sector_row(sb, 7, "│ 8  KLINGONS {0}".format(game.klingons))
-    print "└────────────────────────┘          Docked: {0}".format(game.docked)
+    print "   1  2  3  4  5  6  7  8"
+    print " ┌────────────────────────┐ "
+    print_sector_row("1"+sb, 0, "│ STARDATE {0}".format(game.star_date))
+    print_sector_row("2"+sb, 1, "│ CONDITION {0}".format(game.condition))
+    print_sector_row("3"+sb, 2, "│ QUAD.   {0},{1}".format(game.quadrant_x + 1, game.quadrant_y + 1))
+    print_sector_row("4"+sb, 3, "│ SECTOR  {0},{1}".format(game.sector_x + 1, game.sector_y + 1))
+    print_sector_row("5"+sb, 4, "│ ENERGY {0}".format(game.energy))
+    print_sector_row("6"+sb, 5, "│ P.TORP  {0}".format(game.photon_torpedoes))
+    print_sector_row("7"+sb, 6, "│ SHIELDS {0}".format(game.shield_level))
+    print_sector_row("8"+sb, 7, "│ KLINGONS {0}".format(game.klingons))
+    print " └────────────────────────┘          Docked: {0}".format(game.docked)
 
     if quadrant.klingons > 0:
         print
