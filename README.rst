@@ -5,32 +5,33 @@ PET Python Star Trek
 About
 =====
 
-I recently discovered the classic old BASIC game `Star Trek`_ from 1971, through a post seen on Reddit_.
+In 2014 @cosmicr ported a C# version of the 1976 Super Star Trek BASIC game to Python 2.
 
-The post contained a version of the game rewritten in C-Sharp which I thought was quite good.
-I wondered if anyone had ported it to Python.
+In 2022 I want a Python version of the Commodore PET version of the 1971 classic Star Trek game.
 
-After a little bit of research, I didn't find a definitive version for Python.
+Rather than code it from scratch, I decided to fork @cosmicr's port, remove some of the functionality that comes with the Super Star Trek variant and make the game play more like the Commodore PET version.
 
-This is by no means a definitive version itself; I just took the C# version and converted it to Python.
+The PET port of Star Trek was surprisingly good, designed to play more like a game on a VDU than a teletype. It even had some simple animation and the BASIC code is so opaque and peculiar to the PET that I think someone in Commodore wrote it, possibly even founder Jack Tramiel's son.
 
-.. _Star Trek: http://en.wikipedia.org/wiki/Star_Trek_%28text_game%29
-.. _Reddit: http://www.codeproject.com/Articles/28228/Star-Trek-Text-Game
+You can read more about the PET Star Trek and why I think a Tramiel was involved in my blog post here: http://www.suppertime.co.uk/blogmywiki/2021/09/one-moment-please-while-i-arrange-the-galaxy/
 
-Improvements
-============
 
-There's heaps that can be done with this program. A lot of implementations used global variables.
-I tried to fix this by encapsulating them in a global object, but this can definitely be improved further.
+Changes made so far
+===================
+- re-ordered status to follow PET version
+- added clearing screen
+- making SRS appear automatically
+- removed <> from <E> and <B>
+- added box round SRS and co-ordinate axis labels
+- simplified shields to work same way as PET version
+- made initial shields value 500
+- remove quadrant names
+- improved cumulative scan to be more compact, label axes and show *** for unexplored quadrants
 
-Here is a list of possible improvements:
-
-- Encapsulate everything in classes
-- Include help/instructions
-- Add extra features;
-   + new ships, celestial objects, etc
-   + new weapon types
-   + crew functions
-- Easier navigation (using cartesian system maybe)
-- Make some parts more 'Pythonic'
-- ...Plenty more!
+To do list
+==========
+- ??dock Status
+- co-ordinates are 1-8 in Python version, were 0-7 in PET BASIC
+- initial energy in pet version is 5000, in python it's 3000
+- remove random damage, eg for using the computer too much
+- remove computer menu
