@@ -44,13 +44,13 @@ Changes made so far
 - improved cumulative scan to be more compact, label axes and show `***` for unexplored quadrants
 - moved SRS Y co-ordinate axis labels to left
 - initial energy in PET version is 5000, in this Python port it was 3000
+- docked status shown as 'D'
 
 
 To do list
 ==========
 - exception handling eg for torpedo firing direction when you press enter or type a letter
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
-- remove dock status - no idea how docking works
 - 2 digit stardates not 4
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
 - remove random damage, eg for using the computer too much
