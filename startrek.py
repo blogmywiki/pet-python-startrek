@@ -848,7 +848,7 @@ def initialize_game():
     game.sector_x = random.randint(0, 7)
     game.sector_y = random.randint(0, 7)
     game.star_date = random.randint(0, 50) + 2250
-    game.energy = 3000
+    game.energy = 5000
     game.photon_torpedoes = 10
     game.time_remaining = 40 + random.randint(0, 9)
     game.klingons = 15 + random.randint(0, 5)
