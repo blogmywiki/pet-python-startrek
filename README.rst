@@ -51,6 +51,7 @@ To do list
 - exception handling eg for torpedo firing direction when you press enter or type a letter
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
 - ??dock Status
+- 2 digit stardates not 4
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
 - remove random damage, eg for using the computer too much
 - remove computer menu
