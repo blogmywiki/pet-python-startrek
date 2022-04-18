@@ -283,7 +283,7 @@ def display_galactic_record():
                     sb += "\033[7m" # inverse video for current quadrant
                 sb = sb + "{0}{1}{2}".format(klingon_count, starbase_count, star_count)
                 if i == game.quadrant_y and j == game.quadrant_x:
-                    sb += "\033[0m" # turn off inverse video 
+                    sb += "\033[0m" # turn off inverse video
                 sb += " "
             else:
                 sb += "*** "
@@ -661,7 +661,7 @@ def print_sector(quadrant):
     global game
     game.condition = "G"
     if quadrant.klingons > 0:
-        game.condition = "\033[5mR\033[0m"  # blink
+        game.condition = "\033[7m\033[5mR\033[0m"  # reverse blink
     elif game.energy < 300:
         game.condition = "Y"
     elif game.docked:
