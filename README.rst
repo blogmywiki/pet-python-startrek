@@ -41,6 +41,7 @@ Changes made so far
 - allow access to cumulative scan from main menu
 - added crude help with a diagram of the mad polar co-ordinate system
 - improved cumulative scan to be more compact, label axes and show `***` for unexplored quadrants
+- moved SRS Y co-ordinate axis labels to left
 
 To do list
 ==========
@@ -53,6 +54,5 @@ To do list
 - translate to Python 3
 - add proper help
 - check navigation, probably needs a total re-write
-- move SRS Y co-ordinates to left
 - single letter commands
 - reverse video where needed, if possible, would likely need curses and big re-write, see https://stackoverflow.com/questions/35259566/display-inverse-video-text-with-python-on-terminal
