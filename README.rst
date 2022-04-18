@@ -29,7 +29,7 @@ Changes made so far
 - making SRS appear automatically
 - removed <> from <E> and <B>, put SRS in a box
 - added box round SRS and co-ordinate axis labels
-- simplified shields to work same way as PET version
+- simplified setting shields to work same way as PET version, shields pool shared with energy
 - made initial shields value 500
 - allow access to cumulative scan from main menu
 - added crude help with a diagram of the mad polar co-ordinate system
