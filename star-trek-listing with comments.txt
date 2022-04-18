@@ -1,366 +1,0 @@
-History
--------
-
-This site is the motherlode: http://www.dunnington.info/public/startrek/ 
-
-So which version is the most direct source of the version I played as a child?
-
-
-
-
-Gameplay
---------
-
-F Fire, M Move, S Shields, L = LSR Long range scanner, C Computer map
-
-Angles have 0 degrees as right, 90 is up, 180 left, 
-
-Each quadrant is an 8x8 grid numbered 0-7
-
-There are 64 quadrants numbered 0-7 in each dimension.
-
-Spaces inside each quadrant are called sectors.
-
-E = Enterprise
-⚪️ = star 
-K = Klingon
-B = star base
-
-LSR shows current and surrounding quadrants in 3 digit numbers
-123 = (I think) 2 star bases, 1 Klingon, 3 stars
-
-As the contents of each quadrant appear at different co-ordinates every time you enter the quadrant, I think only the number of each thing is stored, not where they are.
-
-Variables
-KL = number of Klingons
-S = Shields
-E = energy
-P = photon torpedos
-IT = initial time??
-
-
-
-Cursor movement
-----------------
-❤️ = CLR HOME
-] = CURSOR RIGHT
-| = LEFT
-Q = CURSOR DOWN
-⚫️ = CURSOR UP
-
-R = Reverse video on
-_ = Reverse video off
-S = HOME
-
-
-⚪️ = White circle (star)
-┼
-
-READY.
-
- 1 REM SOUND&PROG.MODS: DUNCAN LANGFORD
-
-Select graphics not lower case 2 POKE59468,12
-
-SQ letters are black on white 5 SQ$="SQQQQQQQQQQQQQQQQQQQQQ":rem15,s#2
-
-% is integer identifier, setting up some arrays here; 
-Sets up O as a 7x7 array, could be universe 
-No idea what P is - a 2x7x1 array??
-P$ might be quadrant data? Visited, bases, stars, Klingons etc?
-Sets B$ to be 39 or 40 spaces, a blank line
-L$ = carriage return / new line 8 dimo%(7,7),p(2,7,1),p$(4):fori=1to39:b$=b$+" ":next:l$=chr$(13)
-
-Makes a function called R that rounds a number and multiplies it by 8, probably used 
-For working out distances when moving or firing.
-Sets P$(1) to star/planet, (2) to B base, (3) to K Klingon, 4 to E Enterprise 9 deffnr(x)=int(rnd(x)*8):p$(1)="⚪️":p$(2)="b":p$(3)="k":p$(4)="e"
-
-Hidden line, Leonard Tramiel is the son of Jack, worked
-for Commodore at the time 11 rem"property of leonard tramiel .....................................
-...
-
-CLS HOME and cursor down 20 print"❤️QQQQQQQQone moment please, while i arrange
- 25 print"Qthe galaxy...
-
-Poke 64 random numbers between 0 and 7 into memory (tape buffer?) 30 fori=768to831:pokei,int(rnd(1)*8):next
-
-Set D1 to random number between 17 and 21... 34 d1=17+int(rnd(1)*5):d2=96:d3=32:d4=3
-
-Setting D to one of 64 random location in memory where the random numbers are stored.
-Then looks in there and assigns it again if the contents bitwise AND 96?? (0110 0000) - why??? If it's set to a number between 0 and 7 it will surely never be in that range??? 35 d=768+int(rnd(1)*64):ifpeek(d)andd2then35
-
-Sets DD to a random number between 0 and 3??? Why do it such an odd way?
-D1 = random number 17-21 minus random number between 0 and 3
-DD then multiplied by 32 bitwise OR'd with a random number - does that add 32 to the random number?? Why not just do that!?
-I have no idea what is going on here.
-Then pokes it back into the location. 36 dd=int(rnd(1)*d4+1):d1=d1-dd:dd=dd*d3orpeek(d):poked,dd:ifd1>1then35
- 37 ifd4=1then50
- 38 d1=3+int(rnd(1)*4):d2=24:d3=8:d4=1:goto35
- 50 si=22+int(rnd(1)*5)
- 55 fori=768to831:kh=(peek(i)and96)/32:kl=kl+kh
- 60 bh=(peek(i)and24)/8:bl=bl+bh:next
- 65 print"❤️QQQQQQ":x(7)=kl:x(8)=val(left$(str$(si),8))
- 70 print"you must destroy"kl"klingons
- 71 print"Qin "x(8);" stardates.
- 72 print"QQyou have"bl"starbases.QQQ"
- 75 szz=1:input"sound";ss$:ifleft$(ss$,1)<>"y"thenszz=0
-
-Initialising energy, photon torpedos and shields, IT = number of time jiffies, opens a logical file to the screen  100 e=5000:p=25:s=500:it=ti:open1,3
- 104 def fnr(x)=int(rnd(x)*8)
-
-Probably sets a random quadrant for your location 105 xq=fnr(1):yq=fnr(1)
-
-Sets a random sector for your location? 110 xs=fnr(1):ys=fnr(1):d=768+xq+yq*8
- 130 gosub12000:gosub63000:so=1
- 140 printsq$"Q":d=768+xq+yq*8
- 142 pd=int((20+80*rnd(1))*(peek(d)and96)/32)
- 143 ifpd<=0then156
- 144 ifd0=1thenprint"enterprise protected by starbase.":goto156
- 145 s=s-pd:ifszz<>1then151
- 146 gosub63500:fori=1topd/3:poke59464,100:poke59464,140:next:gosub63600
- 151 print"enterprise hit:shields down";pd;"| units! "
- 153 ifs<100thenprint" * shields dangerously low! *"
- 154 ifs<0thene=e+100*s:s=0:ife<0thengoto4200
- 156 sd=si-(ti-it)/3600
- 157 ifso=1thengosub10000
- 158 ifsd<=0thenprint"❤️time's up ";:end
- 159 a7=1:gosub5000:goto161
- 160 inputco$:c$=left$(co$,1)
- 161 printb$:printb$:printb$:printb$:ifc$="c"thenso=0:gosub60000:goto140
- 170 ifc$="l"thengosub30000:goto140
- 175 ifso=0thengosub63000:gosub10000:so=1
- 180 ifc$="s"then600
- 190 ifc$="f"then700
- 200 ifc$="m"then300
- 210 goto500
-
------
-Moving 300 printsq$"Q":gosub900
- 320 input"distance";w$:w=val(w$)
- 325 ifw=0then140
- 330 ife<wthenprint"⚫️⚫️⚫️NOT ENOUGH ENERGY":PRINTB$:PRINTB$:PRINT"⚫️⚫️":GOTO320
- 340 E=E-W:IFD0<>1THEND$=" ":X=XS:Y=YS:GOSUB50000
- 341 IFSZZ<>1THEN345
- 342 GOSUB63500:FORI=255TO10STEP-14/W:POKE59464,I:POKE59464,I-10:TT=TI
- 343 IFTI-TT<1THEN343
- 344 NEXT:GOSUB63600
- 345 M$="E":GOSUB40000:D0=0
- 350 IFD$<>" "THEN360
- 352 IFO%(XS,YS)<>2THENO%(XS,YS)=0
- 354 O%(X,Y)=4:XS=X:YS=Y:D$="E":GOSUB50000:GOTO140
- 360 IFD$<>"⚪️"THEN390
- 370 PRINTSQ$"Qhit star.     ":print"sent through space warp."
- 375 print"shields stripped."
- 380 s=0:fori=1to500:next:goto105
- 390 ifd$<>"k"then430
- 400 end
- 430 ifd$<>"b"then450
- 440 d0=1:e=5500:p=25:s=0:o%(xs,ys)=0:xs=x:ys=y:goto140
- 450 ifd$<>"€"then480
- 460 ifw<1thenw=1
- 465 xq=xq+int(w*cc+.5):yq=yq+int(w*ss+.5)
- 470 if(xq<0)or(xq>7)or(yq<0)or(yq>7)then105
- 475 goto110
- 500 printsq$"Q";
- 510 print"commands are:  Fire    ","Move
- 520 printtab(15)"Shields","Lrs"
- 530 printtab(15)"Computer map"
- 540 goto140
-
-----
-Shields up
- 600 e=int(e+s):s=0:printsq$"";
- 605 print"you have"e"units available."
- 610 input"how many units to shields      ||||||";a$:a=val(a$)
- 620 ifa>eora>999thenprint"⚫️⚫️⚫️":GOTO605
- 621 IFSZZ<>1THEN630
- 622 GOSUB63500:POKE59464,30:TT=TI
- 623 IFTI-TT<20THEN623
- 624 POKE59464,25:TT=TI
- 625 IFTI-TT<50THEN625
- 626 POKE59464,30:TT=TI
- 627 IFTI-TT<20THEN627
- 628 GOSUB63600
- 630 E=E-A:S=A:GOTO140
-
-----------
-Firing torpedoes 700 IFP=0THENPRINTSQ$"Qyou are out of torpedoes.":goto140
- 710 p=p-1:gosub900
-
-π = pi 715 ifa>2*πthen140
- 720 m$="."
- 730 w=2:gosub40000
-
-Cross symbol 740 if(d$="┼")or(d$="⚪️")then140
- 750 ifd$="k"then800
- 760 ifd$="b"then850
- 800 restore:forj=1to15:readd$:gosub50000:next:kl=kl-1:o%(x,y)=0:d=768+xq
-+yq*8
- 810 q=peek(d):dd=((qand96)-32)or(qand159):poked,dd:ifkl>0then140
- 820 x(9)=val(left$(str$(sd)+"  ",3))
- 825 print"❤️QQQcongratulations!!!!
- 830 print"-------------------
- 835 print"QQthe federation is saved!!":end
-
------------------
- 850 restore:forj=1to15:readd$:gosub50000:next:bl=bl-1:o%(x,y)=0:d=768+xq
-+yq*8
- 855 q=peek(d):dd=((qand24)-8)or(qand231):poked,dd
- 860 printsq$:print"congratulations,":print"you destroyed a star base."
- 880 print"you have"bl"bases left. good luck!!":goto140
-
--------
- 900 printsq$
-
-ø = Pi 910 input"angle";a$:a=val(a$):a=a*ø/180:ss=-sin(a):cc=cos(a):return
-
---------------
-
-Reverse K for Klingon, white circle, solid white circle, +, X, ▩ hatch, *, solid white reverse space, space
-May be the sequence of images when a Klingon is blown up 1000 data"K","○","○","⚪️","⚪️","⚪️","⚪️","┼","┼","╳","▩","▩","*","<white space>"," "
- 3800 goto10000
-
-------------
- 4200 print"❤️QQthe enterprise has been
- 4300 print"destroyedQ":end
-
---------------
- 5000 printsq$"                   "l$"⚫️COMMAND ?⚫️";:Z=-1:A=TI
- 5100 FORI=1TO225:NEXT:Z=Z*-1
- 5200 GETC$:IFPEEK(D)AND96THENIFTI-A>500THENPRINT"Q";:poke33539,32:goto142
-
- 5300 ifa7=1thenprint"Q":a7=0
- 5400 ifpeek(d)and96thengoto6500
- 5500 ifc$=""thenifz=1thenpoke33539,160:goto5100
- 5600 ifc$=""thenpoke33539,32:goto5100
- 5700 print"⚫️]]]]]]]]]]";C$
- 6000 POKE33539,32:RETURN
- 6500 IFSZZTHENGOSUB63500:POKE59464,20:FORI=1TO55:NEXTI:GOSUB63600
- 6700 IFZ=-1THENPOKE33007,32:GOTO5500
- 6800 POKE33007,146:GOTO5500
- 10000 D=768+XQ+YQ*8:GOSUB20000
-
-What does S do? 10010 PRINT"SQQ":printtab(29)"stardate"left$(str$(sd)+"  ",3)
- 10020 printtab(29)"condition ";
- 10030 d$="g"
-
-Reverse video D 10035 ifd0=1thend$="D"
- 10040 printd$tab(69)"quad.  "right$(str$(xq),2)","right$(str$(yq),1)
- 10050 printtab(29)"sector "right$(str$(xs),2)","right$(str$(ys),1)
- 10060 printtab(29)"energy"left$(str$(e)+"    ",5)
- 10070 printtab(29)"p.torp "right$("  "+str$(p),4)
- 10080 printtab(29)"shields"left$(str$(s)+"  ",4)
- 10090 printtab(29)"klingons "right$("  "+str$(kl),2)
- 10100 return
-
-What does S do? 11000 print"SQQ":printtab(4);:rem*read*
- 11015 ifx=0then11025
- 11020 fori=1tox:print"]]]";:next
- 11025 ify=0then11040
- 11030 fori=1toy:print"QQ";:next
- 11040 get#1,d$
- 11050 return
-
------------------
-Subroutine
- 12000 d=768+xq+yq*8:gosub20000:fori=0to7:forj=0to7:o%(i,j)=0:next:next
- 12020 fork=0to2
- 12025 o%(xs,ys)=4
- 12030 ifd(k)=0then12080
- 12040 forl=1tod(k)
- 12050 x=fnr(1):y=fnr(1):ifo%(x,y)<>0then12050
- 12060 o%(x,y)=k+1
- 12070 nextl
- 12080 nextk:return
-
---------------------
- 15000 print"❤️"tab(3);
- 15020 fori=0to7
-
-Reverse video black vertical line 15030 printispc(q+1)"|";
- 15040 next
-
-Printing top row of a box  15050 print:printtab(2)"┌";:forj=1tor:print"─";:next:print"┐"
- 15060 fori=0to7
-
-Vertical lines, first line in double line is reversed which I think is cursor left 15070 print"  │"spc(r)"│":printi"││"spc(r)"│"
- 15080 next
-
-Print bottom row of box 15090 print"  └";:fori=1tor:print"─";:next:print"┘"
- 15091 ifszz<>1orc$<>"c"thenreturn
- 15092 gosub63500:poke59466,1:forqq=1to2:forcw=205to255step10:poke59464,c
-w
- 15093 nextcw,qq:gosub63600:return
-
-----------------
-
-
- 20000 d(0)=peek(d)and7
- 20020 d(1)=int((peek(d)and24)/8)
- 20030 d(2)=int((peek(d)and96)/32)
- 20040 dd=peek(d):dd=ddor(128):poked,dd
- 20050 return
-
-----------------
- 30000 ifszzthengosub63500:fori=1to15:forh=24to16step-1:poke59464,h:nexth
-,i
- 30002 gosub63600
- 30005 printsq$"Q";
- 30010 fory=yq-1toyq+1
- 30020 forx=xq-1toxq+1
- 30022 fork=0to2:d(k)=0:next
- 30025 ifx<0orx>7ory<0ory>7then30060
- 30030 d=768+y*8+x
- 30050 gosub20000
- 30060 fork=0to2
- 30070 d$(k)=mid$(str$(d(k)),2,1)
- 30080 next:printtab(15)d$(2)d$(1)d$(0);" ";
- 30090 next:print:next:return
- 40000 xi=xs+cc:yi=ys+ss
- 40010 forc=1tow*8:x=int(xi+.5):y=int(yi+.5)
- 40015 if(x<0)or(x>7)or(y<0)or(y>7)thend$="€":return
- 40016 ifszz<>1orm$<>"."thengoto40020
- 40017 gosub63500:fori=80to160step10:poke59464,i:next:gosub63600
- 40020 gosub11000:ifd$<>" "thenreturn
- 40030 d$=m$:gosub50000:d$=" ":gosub50000:xi=xi+cc:yi=yi+ss:next:return
- 50000 print"SQQ":printtab(4);
- 50015 ifx=0then50025
- 50020 fori=1tox:print"]]]";:next
- 50025 ify=0then50040
- 50030 fori=1toy:print"QQ";:next
- 50040 printd$
- 50045 ifm$="."thengosub63500:poke59464,100:fori=1to10:nexti:gosub63600
- 50050 return
- 60000 r=32:q=1:gosub15000:print"SQQQ"tab(3);
- 60020 fori=0to7
- 60030 forj=0to7
- 60040 fork=0to2:d(k)=0:next
- 60050 jj=jj+1:d=768+j+i*8:ifint(peek(d)/128)=0then60120
- 60060 gosub20000
-
-Reversed out R = reverse video on 60065 ifj=xqandi=yqthenprint"R";
- 60070 fork=0to2
- 60080 d$(k)=mid$(str$(d(k)),2,1):next
-
-Reversed out underline = reverse video off 60090 printd$(2);d$(1);d$(0);"_ ";:next:ifszz<>1then60100
- 60091 ifjj>60thenjj=0:goto60100
- 60092 gosub63500:poke59466,1:forqq=1to2:forcw=205to255step10:poke59464,cw
- 60093 nextcw,qq:gosub63600
- 60100 print"Q":printtab(3);:next
- 60110 print:print:return
- 60120 d$(2)="*":d$(1)="*":d$(0)="*":goto60090
- 63000 r=24:q=0:gosub15000:forx=0to7:fory=0to7
- 63020 ifo%(x,y)<>0thend$=p$(o%(x,y)):gosub50000
- 63030 next:next:gosub10000:return
-
-------------------------
-?? Sound stuff?? 63500 poke59467,16:poke59466,14:return
- 63600 poke59467,0:poke59466,0:return
- 63700 gosub63500:poke59466,1:forcw=1to5:fori=205to255step10:poke59464,i:
-nexti
- 63800 nextcw:gosub63600
- 63900 sou=2
- 63950 printsou
-ready.
-
-
