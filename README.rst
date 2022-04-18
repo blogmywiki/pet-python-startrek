@@ -57,6 +57,7 @@ To do list
 - remove computer menu
 - translate to Python 3
 - add proper help
+- in PET version if you hit a star you get sent through a space warp, sheilds are stripped - possibly dropped in a random location?
 - check navigation, probably needs a total re-write; PET version uses normal angles with 0 being East, 90 North.
 - same for firing torpedos
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
