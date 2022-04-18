@@ -54,11 +54,12 @@ To do list
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
 - 2 digit stardates not 4
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
-- remove computer menu
 - translate to Python 3
 - add proper help
 - in PET version if you hit a star you get sent through a space warp, sheilds are stripped - possibly dropped in a random location?
 - check navigation, probably needs a total re-write; PET version uses normal angles with 0 being East, 90 North.
+- if I fix navigation angles, I can lose the navigation computers
+- remove computer menu
 - same for firing torpedos
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
 - PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
