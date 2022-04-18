@@ -12,7 +12,7 @@ my childhood in the console of whatever computer I'm using and not faff around w
 
 Rather than code it from scratch, I decided to fork @cosmicr's port, remove some of the functionality that comes with the Super Star Trek variant and make the game play more like the Commodore PET version.
 
-The PET port of Star Trek was surprisingly good, designed to play more like a game on a VDU than a teletype. It even had some simple animation and the BASIC code is so opaque and peculiar to the PET that I think someone in Commodore wrote it, possibly even founder Jack Tramiel's son.
+The PET port of Star Trek was surprisingly good and very simple. It was designed to play more like a video game, using a VDU not a teletype line printer. It even had some simple animation and the BASIC code is so opaque and peculiar to the PET that I think someone in Commodore wrote it, possibly even founder Jack Tramiel's son.
 
 You can read more about the PET Star Trek and why I think a Tramiel was involved in making it in my blog post here: http://www.suppertime.co.uk/blogmywiki/2021/09/one-moment-please-while-i-arrange-the-galaxy/
 
@@ -55,5 +55,7 @@ To do list
 - translate to Python 3
 - add proper help
 - check navigation, probably needs a total re-write
+- same for firing torpedos
+- I think PET version used real time not turns for stardates, am inclined to leave it as turns
 - single letter commands
 - reverse video where needed, if possible, would likely need curses and big re-write, see https://stackoverflow.com/questions/35259566/display-inverse-video-text-with-python-on-terminal
