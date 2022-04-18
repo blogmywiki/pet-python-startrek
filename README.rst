@@ -18,6 +18,7 @@ You can read more about the PET Star Trek and why I think a Tramiel was involved
 You can read about the 1971 and 1976 BASIC versions and their port to C# here: https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game
 
 How to play
+===========
 
 I'll add instructions once the gameplay is properly merged and stable. At the time of writing it's closer to https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game than to 1977 Commodore PET Star Trek.
 
