@@ -7,7 +7,8 @@ About
 
 In 2014 @cosmicr ported a C# version of the 1976 Super Star Trek BASIC game to Python 2.
 
-In 2022 I want a Python version of the Commodore PET version of the 1971 classic Star Trek game.
+In 2022 I want a Python version of the 1977 Commodore PET version of the 1971 classic Star Trek game, so I can re-live 
+my childhood in the console of whatever computer I'm using and not faff around with emulators and disk images.
 
 Rather than code it from scratch, I decided to fork @cosmicr's port, remove some of the functionality that comes with the Super Star Trek variant and make the game play more like the Commodore PET version.
 
