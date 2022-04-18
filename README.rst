@@ -48,6 +48,7 @@ Changes made so far
 
 To do list
 ==========
+- exception handling eg for torpedo firing direction when you press enter or type a letter
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
 - ??dock Status
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
