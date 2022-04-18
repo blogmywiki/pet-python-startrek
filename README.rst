@@ -1,9 +1,6 @@
 ================
- Star Trek 1971
+PET Python Star Trek
 ================
-------------
- for Python
-------------
 
 About
 =====
