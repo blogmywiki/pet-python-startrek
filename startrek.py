@@ -1,13 +1,46 @@
-﻿from math import atan2, pi, sqrt, cos, sin
+# This Python file uses the following encoding: utf-8
+
+# Attempt to turn a Python version of a C# version
+# of Super Star Trek into something more like the
+# version I played on the Commodore PET in 1977.
+# based on https://github.com/cosmicr/startrek1971
+
+from math import atan2, pi, sqrt, cos, sin
 import random
 
-import strings
+# import strings
+import os
+from time import sleep
+
+
+commandStrings = [
+    "--- Commands -----------------",
+    "nav = Navigation",
+    "srs = Short Range Scan",
+    "lrs = Long Range Scan",
+    "rec = Cumulative galactic record",
+    "pha = Phaser Control",
+    "tor = Photon Torpedo Control",
+    "she = Shield Control",
+    "com = Access Computer",
+    "hel = Show instructions",
+    "qui = Quit the game",
+    ]
+
+computerStrings = [
+    "--- Main Computer --------------",
+    "rec = Cumulative Galatic Record",
+    "sta = Status Report",
+    "tor = Photon Torpedo Calculator",
+    "bas = Starbase Calculator",
+    "nav = Navigation Calculator",
+    ]
 
 
 class Quadrant():
 
     def __init__(self):
-        self.name = ""
+#        self.name = ""
         self.klingons = 0
         self.stars = 0
         self.starbase = False
@@ -61,13 +94,13 @@ game = Game()
 
 def run():
     global game
-    print_strings(strings.titleStrings)
     while True:
         initialize_game()
         print_mission()
         generate_sector()
-        print_strings(strings.commandStrings)
+        print_strings(commandStrings)
         while game.energy > 0 and not game.destroyed and game.klingons > 0 and game.time_remaining > 0:
+            short_range_scan()
             command_prompt()
             print_game_status()
 
@@ -97,7 +130,7 @@ def print_game_status():
 
 
 def command_prompt():
-    command = raw_input("Enter command: ").strip().lower()
+    command = raw_input("COMMAND ? ").strip().lower()
     print
     if command == "nav":
         navigation()
@@ -115,8 +148,12 @@ def command_prompt():
         computer_controls()
     elif command.startswith('qui') or command.startswith('exi'):
         exit()
+    elif command == "hel":
+        show_help()
+    elif command == "rec":
+        display_galactic_record()
     else:
-        print_strings(strings.commandStrings)
+        print_strings(commandStrings)
 
 
 def computer_controls():
@@ -125,7 +162,7 @@ def computer_controls():
         print "The main computer is damaged. Repairs are underway."
         print
         return
-    print_strings(strings.computerStrings)
+    print_strings(computerStrings)
     command = raw_input("Enter computer command: ").strip().lower()
     if command == "rec":
         display_galactic_record()
@@ -247,12 +284,16 @@ def display_status():
 
 def display_galactic_record():
     global game
+    clearConsole()
     print
     sb = ""
-    print "-------------------------------------------------"
+    print "   1   2   3   4   5   6   7   8"
+    print " ┌────────────────────────────────┐ "
+
     for i in range(8):
+        sb = str(i+1)
+        sb += "│"
         for j in range(8):
-            sb += "| "
             klingon_count = 0
             starbase_count = 0
             star_count = 0
@@ -261,13 +302,15 @@ def display_galactic_record():
                 klingon_count = quadrant.klingons
                 starbase_count = 1 if quadrant.starbase else 0
                 star_count = quadrant.stars
-            sb = sb + \
-                "{0}{1}{2} ".format(klingon_count, starbase_count, star_count)
-        sb += "|"
+                sb = sb + "{0}{1}{2} ".format(klingon_count, starbase_count, star_count)
+            else:
+                sb += "*** "
+        sb += "│"
         print sb
         sb = ""
-        print "-------------------------------------------------"
+    print " └────────────────────────────────┘"
     print
+    sleep(10)
 
 
 def phaser_controls():
@@ -317,38 +360,16 @@ def phaser_controls():
 
 def shield_controls():
     global game
-    print "--- Shield Controls ----------------"
-    print "add = Add energy to shields."
-    print "sub = Subtract energy from shields."
-    print
-    print "Enter shield control command: "
-    command = raw_input("Enter shield control command: ").strip().lower()
-    print
-    if command == "add":
-        adding = True
-        max_transfer = game.energy
-    elif command == "sub":
-        adding = False
-        max_transfer = game.shield_level
-    else:
-        print "Invalid command."
-        print
-        return
-    transfer = input_double(
-        "Enter amount of energy (1--{0}): ".format(max_transfer))
+    max_transfer = game.energy + game.shield_level
+    print "YOU HAVE {0} UNITS AVAILABLE.".format(max_transfer)
+    transfer = int(input("HOW MANY UNITS TO SHIELDS? "))
     if not transfer or transfer < 1 or transfer > max_transfer:
-        print "Invalid amount of energy."
+        print "INVALID AMOUNT OF ENERGY."
         print
         return
-    print
-    if adding:
-        game.energy -= int(transfer)
-        game.shield_level += int(transfer)
-    else:
-        game.energy += int(transfer)
-        game.shield_level -= int(transfer)
-    print "Shield strength is now {0}. Energy level is now {1}.".format(game.shield_level, game.energy)
-    print
+    game.energy += game.shield_level
+    game.shield_level = transfer
+    game.energy -= transfer
 
 
 def klingons_attack():
@@ -468,10 +489,9 @@ def long_range_scan():
         print
         return
     sb = ""
-    print "-------------------"
     for i in range(game.quadrant_y - 1, game.quadrant_y+2):  # quadrantY + 1 ?
         for j in range(game.quadrant_x - 1, game.quadrant_x+2):  # quadrantX + 1?
-            sb += "| "
+            sb += " "
             klingon_count = 0
             starbase_count = 0
             star_count = 0
@@ -483,10 +503,8 @@ def long_range_scan():
                 star_count = quadrant.stars
             sb = sb + \
                 "{0}{1}{2} ".format(klingon_count, starbase_count, star_count)
-        sb += "|"
         print sb
         sb = ""
-        print "-------------------"
     print
 
 
@@ -751,6 +769,8 @@ def read_sector(i, j):
 
 
 def short_range_scan():
+    sleep(3)
+    clearConsole()
     global game
     if game.short_range_scan_damage > 0:
         print "Short range scanner is damaged. Repairs are underway."
@@ -764,23 +784,24 @@ def short_range_scan():
 
 def print_sector(quadrant):
     global game
-    game.condition = "GREEN"
+    game.condition = "G"
     if quadrant.klingons > 0:
-        game.condition = "RED"
+        game.condition = "R"
     elif game.energy < 300:
-        game.condition = "YELLOW"
+        game.condition = "Y"
 
-    sb = ""
-    print "-=--=--=--=--=--=--=--=-          Region: {0}".format(quadrant.name)
-    print_sector_row(sb, 0, "           Quadrant: [{0},{1}]".format(game.quadrant_x + 1, game.quadrant_y + 1))
-    print_sector_row(sb, 1, "             Sector: [{0},{1}]".format(game.sector_x + 1, game.sector_y + 1))
-    print_sector_row(sb, 2, "           Stardate: {0}".format(game.star_date))
-    print_sector_row(sb, 3, "     Time remaining: {0}".format(game.time_remaining))
-    print_sector_row(sb, 4, "          Condition: {0}".format(game.condition))
-    print_sector_row(sb, 5, "             Energy: {0}".format(game.energy))
-    print_sector_row(sb, 6, "            Shields: {0}".format(game.shield_level))
-    print_sector_row(sb, 7, "   Photon Torpedoes: {0}".format(game.photon_torpedoes))
-    print "-=--=--=--=--=--=--=--=-             Docked: {0}".format(game.docked)
+    sb = "│"
+    print "  1  2  3  4  5  6  7  8"
+    print "┌────────────────────────┐ "
+    print_sector_row(sb, 0, "│ 1  STARDATE {0}".format(game.star_date))
+    print_sector_row(sb, 1, "│ 2  CONDITION {0}".format(game.condition))
+    print_sector_row(sb, 2, "│ 3  QUAD.   {0},{1}".format(game.quadrant_x + 1, game.quadrant_y + 1))
+    print_sector_row(sb, 3, "│ 4  SECTOR  {0},{1}".format(game.sector_x + 1, game.sector_y + 1))
+    print_sector_row(sb, 4, "│ 5  ENERGY {0}".format(game.energy))
+    print_sector_row(sb, 5, "│ 6  P.TORP  {0}".format(game.photon_torpedoes))
+    print_sector_row(sb, 6, "│ 7  SHIELDS {0}".format(game.shield_level))
+    print_sector_row(sb, 7, "│ 8  KLINGONS {0}".format(game.klingons))
+    print "└────────────────────────┘          Docked: {0}".format(game.docked)
 
     if quadrant.klingons > 0:
         print
@@ -790,7 +811,7 @@ def print_sector(quadrant):
     elif game.energy < 300:
         print
         print "Condition YELLOW: Low energy level."
-        game.condition = "YELLOW"
+        game.condition = "Y"
 
 
 def print_sector_row(sb, row, suffix):
@@ -799,27 +820,32 @@ def print_sector_row(sb, row, suffix):
         if game.sector[row][column] == sector_type.empty:
             sb += "   "
         elif game.sector[row][column] == sector_type.enterprise:
-            sb += "<E>"
+            sb += " E "
         elif game.sector[row][column] == sector_type.klingon:
-            sb += "+K+"
+            sb += " K "
         elif game.sector[row][column] == sector_type.star:
             sb += " * "
         elif game.sector[row][column] == sector_type.starbase:
-            sb += ">S<"
+            sb += " B "
     if suffix is not None:
         sb = sb + suffix
     print sb
 
 
 def print_mission():
+    clearConsole()
     global game
-    print "Mission: Destroy {0} Klingon ships in {1} stardates with {2} starbases.".format(
+    print "\n\n\n\nYOU MUST DESTROY {0} KLINGONS\nIN  {1}  STARDATES.\n\n\nYOU HAVE {2} STARBASES.\n\n".format(
         game.klingons, game.time_remaining, game.starbases)
+    sleep(3)
     print
 
 
 def initialize_game():
     # gah, globals
+    clearConsole()
+    print "\n\n\n\nONE MOMENT PLEASE, WHILE I ARRANGE\n\nTHE GALAXY...\n"
+    sleep(3)
     global game
     game.quadrant_x = random.randint(0, 7)
     game.quadrant_y = random.randint(0, 7)
@@ -839,21 +865,15 @@ def initialize_game():
     game.computer_damage = 0
     game.photon_damage = 0
     game.phaser_damage = 0
-    game.shield_level = 0
+    game.shield_level = 500
     game.docked = False
 
-    names = []
-    for name in strings.quadrantNames:
-        names.append(name)
 
     for i in range(8):
         for j in range(8):
-            index = random.randint(0, len(names) - 1)
             quadrant = Quadrant()
-            quadrant.name = names[index]
             quadrant.stars = 1 + random.randint(0, 7)
             game.quadrants[i][j] = quadrant
-            del names[index]
 
     klingon_count = game.klingons
     starbase_count = game.starbases
@@ -873,6 +893,23 @@ def print_strings(string_list):
     for string in string_list:
         print string
     print
+
+def clearConsole():
+    command = 'clear'
+    if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+        command = 'cls'
+    os.system(command)
+
+def show_help():
+    print '''
+    4    3    2
+     `.  :  .'
+       `.:.'
+    5---<*>---1
+       .':`.
+     .'  :  `.
+    6    7    8
+    '''
 
 
 if __name__ == '__main__':
