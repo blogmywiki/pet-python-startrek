@@ -46,6 +46,7 @@ Changes made so far
 - initial energy in PET version is 5000, in this Python port it was 3000
 - docked status shown as 'D'
 - removed random system damage, eg for using the computer too much
+- added inverse video for status D & cumulative map current quadrant, blink for status R using ANSI escape sequences
 
 
 To do list
@@ -64,4 +65,4 @@ To do list
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
 - PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
 - single letter commands
-- reverse video where needed, if possible, would likely need curses and big re-write, see https://stackoverflow.com/questions/35259566/display-inverse-video-text-with-python-on-terminal
+- more reverse video as required using ANSI escape sequences
