@@ -667,7 +667,7 @@ def navigation():
             game.quadrant_y = quad_y
             game.sector[game.sector_y][game.sector_x] = sector_type.enterprise
     if is_docking_location(game.sector_y, game.sector_x):
-        game.energy = 3000
+        game.energy = 5000
         game.photon_torpedoes = 10
         game.navigation_damage = 0
         game.short_range_scan_damage = 0
@@ -785,6 +785,8 @@ def print_sector(quadrant):
         game.condition = "R"
     elif game.energy < 300:
         game.condition = "Y"
+    elif game.docked:
+        game.condition = "D"
 
     sb = "│"
     print "   1  2  3  4  5  6  7  8"
@@ -797,7 +799,7 @@ def print_sector(quadrant):
     print_sector_row("6"+sb, 5, "│ P.TORP  {0}".format(game.photon_torpedoes))
     print_sector_row("7"+sb, 6, "│ SHIELDS {0}".format(game.shield_level))
     print_sector_row("8"+sb, 7, "│ KLINGONS {0}".format(game.klingons))
-    print " └────────────────────────┘          Docked: {0}".format(game.docked)
+    print " └────────────────────────┘"
 
     if quadrant.klingons > 0:
         print
