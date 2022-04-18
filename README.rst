@@ -50,15 +50,16 @@ To do list
 ==========
 - exception handling eg for torpedo firing direction when you press enter or type a letter
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
-- ??dock Status
+- remove dock status - no idea how docking works
 - 2 digit stardates not 4
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
 - remove random damage, eg for using the computer too much
 - remove computer menu
 - translate to Python 3
 - add proper help
-- check navigation, probably needs a total re-write
+- check navigation, probably needs a total re-write; PET version uses normal angles with 0 being East, 90 North.
 - same for firing torpedos
-- I think PET version used real time not turns for stardates, am inclined to leave it as turns
+- PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
+- PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
 - single letter commands
 - reverse video where needed, if possible, would likely need curses and big re-write, see https://stackoverflow.com/questions/35259566/display-inverse-video-text-with-python-on-terminal
