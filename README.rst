@@ -18,7 +18,9 @@ You can read more about the PET Star Trek and why I think a Tramiel was involved
 
 Changes made so far
 ===================
-- removed ASCII art, added 'ONE MOMENT PLEASE, WHILE I ARRANGE THE GALAXY' message at start
+- removed ASCII art
+- added 'ONE MOMENT PLEASE, WHILE I ARRANGE THE GALAXY' message at start
+- removed strings.py and folded remaining strings into main program
 - re-ordered status to follow PET version
 - added clearing screen
 - making SRS appear automatically
