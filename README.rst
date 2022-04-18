@@ -43,13 +43,14 @@ Changes made so far
 - added crude help with a diagram of the mad polar co-ordinate system
 - improved cumulative scan to be more compact, label axes and show `***` for unexplored quadrants
 - moved SRS Y co-ordinate axis labels to left
+- initial energy in PET version is 5000, in this Python port it was 3000
+
 
 To do list
 ==========
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
 - ??dock Status
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
-- initial energy in pet version is 5000, in python it's 3000
 - remove random damage, eg for using the computer too much
 - remove computer menu
 - translate to Python 3
