@@ -48,4 +48,4 @@ To do list
 - check navigation, probably needs a total re-write
 - move SRS Y co-ordinates to left
 - single letter commands
-- reverse video where needed, if possible
+- reverse video where needed, if possible, would likely need curses and big re-write, see https://stackoverflow.com/questions/35259566/display-inverse-video-text-with-python-on-terminal
