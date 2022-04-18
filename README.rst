@@ -18,20 +18,28 @@ You can read more about the PET Star Trek and why I think a Tramiel was involved
 
 Changes made so far
 ===================
+- removed ASCII art, added 'ONE MOMENT PLEASE, WHILE I ARRANGE THE GALAXY' message at start
 - re-ordered status to follow PET version
 - added clearing screen
 - making SRS appear automatically
-- removed <> from <E> and <B>
+- removed <> from <E> and <B>, put SRS in a box
 - added box round SRS and co-ordinate axis labels
 - simplified shields to work same way as PET version
 - made initial shields value 500
 - remove quadrant names
-- improved cumulative scan to be more compact, label axes and show *** for unexplored quadrants
+- improved cumulative scan to be more compact, label axes and show `***` for unexplored quadrants
 
 To do list
 ==========
+- sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
 - ??dock Status
-- co-ordinates are 1-8 in Python version, were 0-7 in PET BASIC
+- co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
 - initial energy in pet version is 5000, in python it's 3000
 - remove random damage, eg for using the computer too much
 - remove computer menu
+- translate to Python 3
+- add proper help
+- check navigation, probably needs a total re-write
+- move SRS Y co-ordinates to left
+- single letter commands
+- reverse video where needed, if possible
