@@ -31,6 +31,8 @@ Changes made so far
 - added box round SRS and co-ordinate axis labels
 - simplified shields to work same way as PET version
 - made initial shields value 500
+- allow access to cumulative scan from main menu
+- added crude help with a diagram of the mad polar co-ordinate system
 - improved cumulative scan to be more compact, label axes and show `***` for unexplored quadrants
 
 To do list
