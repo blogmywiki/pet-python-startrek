@@ -70,13 +70,6 @@ class Game():
         self.quadrant_x, self.quadrant_y = 0, 0
         self.sector_x, self.sector_y = 0, 0
         self.shield_level = 0
-        self.navigation_damage = 0
-        self.short_range_scan_damage = 0
-        self.long_range_scan_damage = 0
-        self.shield_control_damage = 0
-        self.computer_damage = 0
-        self.photon_damage = 0
-        self.phaser_damage = 0
         self.photon_torpedoes = 0
         self.docked = False
         self.destroyed = False
@@ -104,7 +97,7 @@ def run():
 def print_game_status():
     global game
     if game.destroyed:
-        print "MISSION FAILED: ENTERPRISE DESTROYED!!!"
+        print "THE ENTERPRISE HAS BEEN\nDESTROYED"
         print
         print
         print
@@ -154,10 +147,6 @@ def command_prompt():
 
 def computer_controls():
     global game
-    if game.computer_damage > 0:
-        print "The main computer is damaged. Repairs are underway."
-        print
-        return
     print_strings(computerStrings)
     command = raw_input("Enter computer command: ").strip().lower()
     if command == "rec":
@@ -174,7 +163,6 @@ def computer_controls():
         print
         print "Invalid computer command."
         print
-    induce_damage(4)
 
 
 def compute_direction(x1, y1, x2, y2):
@@ -267,14 +255,6 @@ def display_status():
     print
     print "               Time Remaining: {0}".format(game.time_remaining)
     print "      Klingon Ships Remaining: {0}".format(game.klingons)
-    print "                    Starbases: {0}".format(game.starbases)
-    print "           Warp Engine Damage: {0}".format(game.navigation_damage)
-    print "   Short Range Scanner Damage: {0}".format(game.short_range_scan_damage)
-    print "    Long Range Scanner Damage: {0}".format(game.long_range_scan_damage)
-    print "       Shield Controls Damage: {0}".format(game.shield_control_damage)
-    print "         Main Computer Damage: {0}".format(game.computer_damage)
-    print "Photon Torpedo Control Damage: {0}".format(game.photon_damage)
-    print "                Phaser Damage: {0}".format(game.phaser_damage)
     print
 
 
@@ -311,10 +291,6 @@ def display_galactic_record():
 
 def phaser_controls():
     global game
-    if game.phaser_damage > 0:
-        print "Phasers are damaged. Repairs are underway."
-        print
-        return
     if len(game.klingon_ships) == 0:
         print "There are no Klingon ships in this quadrant."
         print
@@ -400,90 +376,8 @@ def distance(x1, y1, x2, y2):
     return sqrt(x * x + y * y)
 
 
-def induce_damage(item):
-    global game
-    if random.randint(0, 6) > 0:
-        return
-    damage = 1 + random.randint(0, 4)
-    if item < 0:
-        item = random.randint(0, 6)
-    if item == 0:
-        game.navigation_damage = damage
-        print "Warp engines are malfunctioning."
-    elif item == 1:
-        game.short_range_scan_damage = damage
-        print "Short range scanner is malfunctioning."
-    elif item == 2:
-        game.long_range_scan_damage = damage
-        print "Long range scanner is malfunctioning."
-    elif item == 3:
-        game.shield_control_damage = damage
-        print "Shield controls are malfunctioning."
-    elif item == 4:
-        game.computer_damage = damage
-        print "The main computer is malfunctioning."
-    elif item == 5:
-        game.photon_damage = damage
-        print "Photon torpedo controls are malfunctioning."
-    elif item == 6:
-        game.phaser_damage = damage
-        print "Phasers are malfunctioning."
-    print
-
-
-def repair_damage():
-    global game
-    if game.navigation_damage > 0:
-        game.navigation_damage -= 1
-        if game.navigation_damage == 0:
-            print "Warp engines have been repaired."
-        print
-        return True
-    if game.short_range_scan_damage > 0:
-        game.short_range_scan_damage -= 1
-        if game.short_range_scan_damage == 0:
-            print "Short range scanner has been repaired."
-        print
-        return True
-    if game.long_range_scan_damage > 0:
-        game.long_range_scan_damage -= 1
-        if game.long_range_scan_damage == 0:
-            print "Long range scanner has been repaired."
-        print
-        return True
-    if game.shield_control_damage > 0:
-        game.shield_control_damage -= 1
-        if game.shield_control_damage == 0:
-            print "Shield controls have been repaired."
-        print
-        return True
-    if game.computer_damage > 0:
-        game.computer_damage -= 1
-        if game.computer_damage == 0:
-            print "The main computer has been repaired."
-        print
-        return True
-    if game.photon_damage > 0:
-        game.photon_damage -= 1
-        if game.photon_damage == 0:
-            print "Photon torpedo controls have been repaired."
-        print
-        return True
-    if game.phaser_damage > 0:
-        game.phaser_damage -= 1
-        if game.phaser_damage == 0:
-            print "Phasers have been repaired."
-        print
-        return True
-    return False
-
-
 def long_range_scan():
     global game
-    if game.long_range_scan_damage > 0:
-        print "Long range scanner is damaged. Repairs are underway."
-        print
-        return
     sb = ""
     for i in range(game.quadrant_y - 1, game.quadrant_y+2):  # quadrantY + 1 ?
         for j in range(game.quadrant_x - 1, game.quadrant_x+2):  # quadrantX + 1?
@@ -506,10 +400,6 @@ def long_range_scan():
 
 def torpedo_control():
     global game
-    if game.photon_damage > 0:
-        print "Photon torpedo control is damaged. Repairs are underway."
-        print
-        return
     if game.photon_torpedoes == 0:
         print "Photon torpedoes exhausted."
         print
@@ -581,10 +471,6 @@ def torpedo_control():
 def navigation():
     global game
     max_warp_factor = 8.0
-    if game.navigation_damage > 0:
-        max_warp_factor = 0.2 + random.randint(0, 8) / 10.0
-        print "Warp engines damaged. Maximum warp factor: {0}".format(max_warp_factor)
-        print
 
     direction = input_double("Enter course (1.0--8.9): ")
     if not direction or direction < 1.0 or direction > 9.0:
@@ -669,13 +555,6 @@ def navigation():
     if is_docking_location(game.sector_y, game.sector_x):
         game.energy = 5000
         game.photon_torpedoes = 10
-        game.navigation_damage = 0
-        game.short_range_scan_damage = 0
-        game.long_range_scan_damage = 0
-        game.shield_control_damage = 0
-        game.computer_damage = 0
-        game.photon_damage = 0
-        game.phaser_damage = 0
         game.shield_level = 0
         game.docked = True
     else:
@@ -696,8 +575,6 @@ def navigation():
                 and last_quad_x == game.quadrant_x and last_quad_y == game.quadrant_y:
             klingons_attack()
             print
-        elif not repair_damage():
-            induce_damage(-1)
 
 
 def input_double(prompt):
@@ -768,13 +645,9 @@ def short_range_scan():
     sleep(3)
     clearConsole()
     global game
-    if game.short_range_scan_damage > 0:
-        print "Short range scanner is damaged. Repairs are underway."
-        print
-    else:
-        quadrant = game.quadrants[game.quadrant_y][game.quadrant_x]
-        quadrant.scanned = True
-        print_sector(quadrant)
+    quadrant = game.quadrants[game.quadrant_y][game.quadrant_x]
+    quadrant.scanned = True
+    print_sector(quadrant)
     print
 
 
@@ -805,7 +678,9 @@ def print_sector(quadrant):
         print
         print "Condition RED: Klingon ship{0} detected.".format("" if quadrant.klingons == 1 else "s")
         if game.shield_level == 0 and not game.docked:
-            print "Warning: Shields are down."
+            print "* WARNING: SHIELDS ARE DOWN! *"
+        elif game.shield_level < 100 and not game.docked:
+            print "* SHIELDS DANGEROUSLY LOW! *"
     elif game.energy < 300:
         print
         print "Condition YELLOW: Low energy level."
@@ -856,13 +731,6 @@ def initialize_game():
     game.klingons = 15 + random.randint(0, 5)
     game.starbases = 2 + random.randint(0, 2)
     game.destroyed = False
-    game.navigation_damage = 0
-    game.short_range_scan_damage = 0
-    game.long_range_scan_damage = 0
-    game.shield_control_damage = 0
-    game.computer_damage = 0
-    game.photon_damage = 0
-    game.phaser_damage = 0
     game.shield_level = 500
     game.docked = False
 
