@@ -45,6 +45,7 @@ Changes made so far
 - moved SRS Y co-ordinate axis labels to left
 - initial energy in PET version is 5000, in this Python port it was 3000
 - docked status shown as 'D'
+- removed random system damage, eg for using the computer too much
 
 
 To do list
@@ -53,7 +54,6 @@ To do list
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
 - 2 digit stardates not 4
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
-- remove random damage, eg for using the computer too much
 - remove computer menu
 - translate to Python 3
 - add proper help
