@@ -20,6 +20,7 @@ Changes made so far
 ===================
 - removed ASCII art
 - added 'ONE MOMENT PLEASE, WHILE I ARRANGE THE GALAXY' message at start
+- removed quadrant names
 - removed strings.py and folded remaining strings into main program
 - re-ordered status to follow PET version
 - added clearing screen
@@ -28,7 +29,6 @@ Changes made so far
 - added box round SRS and co-ordinate axis labels
 - simplified shields to work same way as PET version
 - made initial shields value 500
-- remove quadrant names
 - improved cumulative scan to be more compact, label axes and show `***` for unexplored quadrants
 
 To do list
