@@ -15,6 +15,8 @@ The PET port of Star Trek was surprisingly good, designed to play more like a ga
 
 You can read more about the PET Star Trek and why I think a Tramiel was involved in my blog post here: http://www.suppertime.co.uk/blogmywiki/2021/09/one-moment-please-while-i-arrange-the-galaxy/
 
+You can read about the 1971 and 1976 BASIC versions and their port to C# here: https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game
+
 
 Changes made so far
 ===================
