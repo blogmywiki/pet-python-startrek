@@ -13,9 +13,13 @@ Rather than code it from scratch, I decided to fork @cosmicr's port, remove some
 
 The PET port of Star Trek was surprisingly good, designed to play more like a game on a VDU than a teletype. It even had some simple animation and the BASIC code is so opaque and peculiar to the PET that I think someone in Commodore wrote it, possibly even founder Jack Tramiel's son.
 
-You can read more about the PET Star Trek and why I think a Tramiel was involved in my blog post here: http://www.suppertime.co.uk/blogmywiki/2021/09/one-moment-please-while-i-arrange-the-galaxy/
+You can read more about the PET Star Trek and why I think a Tramiel was involved in making it in my blog post here: http://www.suppertime.co.uk/blogmywiki/2021/09/one-moment-please-while-i-arrange-the-galaxy/
 
 You can read about the 1971 and 1976 BASIC versions and their port to C# here: https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game
+
+How to play
+
+I'll add instructions once the gameplay is properly merged and stable. At the time of writing it's closer to https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game than to 1977 Commodore PET Star Trek.
 
 
 Changes made so far
