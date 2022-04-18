@@ -22,6 +22,8 @@ How to play
 
 I'll add instructions once the gameplay is properly merged and stable. At the time of writing it's closer to https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game than to 1977 Commodore PET Star Trek.
 
+Try out a version of it in your browser here: https://trinket.io/library/trinkets/38adc68043
+
 
 Changes made so far
 ===================
