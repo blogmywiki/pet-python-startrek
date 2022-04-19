@@ -89,6 +89,8 @@ def run():
         print_mission()
         generate_sector()
         print_strings(commandStrings)
+        sleep(5)
+        clearConsole()
         while game.energy > 0 and not game.destroyed and game.klingons > 0 and game.time_remaining > 0:
             short_range_scan()
             command_prompt()
@@ -102,25 +104,34 @@ def print_game_status():
         print
         print
         print
+        sleep(3)
     elif game.energy == 0:
         print "MISSION FAILED: ENTERPRISE RAN OUT OF ENERGY."
         print
         print
         print
+        sleep(3)
     elif game.klingons == 0:
         print "MISSION ACCOMPLISHED: ALL KLINGON SHIPS DESTROYED. WELL DONE!!!"
         print
         print
         print
+        sleep(3)
     elif game.time_remaining == 0:
         print "MISSION FAILED: ENTERPRISE RAN OUT OF TIME."
         print
         print
         print
+        sleep(3)
 
 
 def command_prompt():
+    # clear command line
+    print"\033[12;0f"
+    print"                                                  "
+    print"\033[A\033[A"
     command = raw_input("COMMAND ? ").strip().lower()
+    clearStatusLines()
     print
     if command == "nav":
         navigation()
@@ -144,6 +155,7 @@ def command_prompt():
         display_galactic_record()
     else:
         print_strings(commandStrings)
+#        command_prompt()
 
 
 def computer_controls():
@@ -199,12 +211,20 @@ def navigation_calculator():
     print
     print "Enterprise located in quadrant [%s,%s]." % (game.quadrant_x + 1, game.quadrant_y + 1)
     print
-    quad_x = input_double("Enter destination quadrant X (1--8): ")
+    try:
+        quad_x = input_double("Enter destination quadrant X (1--8): ")
+    except:
+        print "INVALID X CO-ORDINATE"
+        return
     if quad_x is False or quad_x < 1 or quad_x > 8:
         print "Invalid X coordinate."
         print
         return
-    quad_y = input_double("Enter destination quadrant Y (1--8): ")
+    try:
+        quad_y = input_double("Enter destination quadrant Y (1--8): ")
+    except:
+        print "INVALID Y CO-ORDINATE"
+        return
     if quad_y is False or quad_y < 1 or quad_y > 8:
         print "Invalid Y coordinate."
         print
@@ -292,7 +312,8 @@ def display_galactic_record():
         sb = ""
     print " └────────────────────────────────┘"
     print
-    sleep(10)
+#    sleep(10)
+    command_prompt()
 
 
 def phaser_controls():
@@ -302,38 +323,41 @@ def phaser_controls():
         print
         return
     print "Phasers locked on target."
-    phaser_energy = input_double("Enter phaser energy (1--{0}): ".format(game.energy))
-    if not phaser_energy or phaser_energy < 1 or phaser_energy > game.energy:
-        print "Invalid energy level."
+    try:
+        phaser_energy = input_double("Enter phaser energy (1--{0}): ".format(game.energy))
+        if not phaser_energy or phaser_energy < 1 or phaser_energy > game.energy:
+            print "Invalid energy level."
+            print
+            return
         print
-        return
-    print
-    print "Firing phasers..."
-    destroyed_ships = []
-    for ship in game.klingon_ships:
-        game.energy -= int(phaser_energy)
-        if game.energy < 0:
-            game.energy = 0
-            break
-        dist = distance(game.sector_x, game.sector_y, ship.sector_x, ship.sector_y)
-        delivered_energy = phaser_energy * (1.0 - dist / 11.3)
-        ship.shield_level -= int(delivered_energy)
-        if ship.shield_level <= 0:
-            print "Klingon ship destroyed at sector [{0},{1}].".format(ship.sector_x + 1, ship.sector_y + 1)
-            destroyed_ships.append(ship)
-        else:
-            print "Hit ship at sector [{0},{1}]. Klingon shield strength dropped to {2}.".format(
-                ship.sector_x + 1, ship.sector_y + 1, ship.shield_level
-            )
-    for ship in destroyed_ships:
-        game.quadrants[game.quadrant_y][game.quadrant_x].klingons -= 1
-        game.klingons -= 1
-        game.sector[ship.sector_y][ship.sector_x] = sector_type.empty
-        game.klingon_ships.remove(ship)
-    if len(game.klingon_ships) > 0:
+        print "Firing phasers..."
+        destroyed_ships = []
+        for ship in game.klingon_ships:
+            game.energy -= int(phaser_energy)
+            if game.energy < 0:
+                game.energy = 0
+                break
+            dist = distance(game.sector_x, game.sector_y, ship.sector_x, ship.sector_y)
+            delivered_energy = phaser_energy * (1.0 - dist / 11.3)
+            ship.shield_level -= int(delivered_energy)
+            if ship.shield_level <= 0:
+                print "Klingon ship destroyed at sector [{0},{1}].".format(ship.sector_x + 1, ship.sector_y + 1)
+                destroyed_ships.append(ship)
+            else:
+                print "Hit ship at sector [{0},{1}]. Klingon shield strength dropped to {2}.".format(
+                    ship.sector_x + 1, ship.sector_y + 1, ship.shield_level
+                )
+        for ship in destroyed_ships:
+            game.quadrants[game.quadrant_y][game.quadrant_x].klingons -= 1
+            game.klingons -= 1
+            game.sector[ship.sector_y][ship.sector_x] = sector_type.empty
+            game.klingon_ships.remove(ship)
+        if len(game.klingon_ships) > 0:
+            print
+            klingons_attack()
         print
-        klingons_attack()
-    print
+    except:
+        print "INVALID PHASER ENERGY"
 
 
 def shield_controls():
@@ -401,7 +425,10 @@ def long_range_scan():
                 "{0}{1}{2} ".format(klingon_count, starbase_count, star_count)
         print sb
         sb = ""
-    print
+    print"\033[A\033[A\033[A\033[A\033[A\033[A"
+    print"\033[K\033[A"
+#    command_prompt()
+
 
 
 def torpedo_control():
@@ -414,10 +441,14 @@ def torpedo_control():
         print "There are no Klingon ships in this quadrant."
         print
         return
-    direction = input_double("Enter firing direction (1.0--9.0): ")
-    if not direction or direction < 1.0 or direction > 9.0:
-        print "Invalid direction."
-        print
+    try:
+        direction = input_double("Enter firing direction (1.0--9.0): ")
+        if not direction or direction < 1.0 or direction > 9.0:
+            print "Invalid direction."
+            print
+            return
+    except:
+        print "INVALID DIRECTION"
         return
     print
     print "Photon torpedo fired..."
@@ -478,17 +509,27 @@ def navigation():
     global game
     max_warp_factor = 8.0
 
-    direction = input_double("Enter course (1.0--8.9): ")
-    if not direction or direction < 1.0 or direction > 9.0:
-        print "Invalid course."
-        print
+    short_range_scan()
+
+    try:
+        direction = input_double("Enter course (1.0--8.9): ")
+        if not direction or direction < 1.0 or direction > 9.0:
+            print "Invalid course."
+            print
+            return
+    except:
+        print "INVALID COURSE"
         return
 
-    dist = input_double(
-        "Enter warp factor (0.1--{0}): ".format(max_warp_factor))
-    if not dist or dist < 0.1 or dist > max_warp_factor:
-        print "Invalid warp factor."
-        print
+    try:
+        dist = input_double(
+            "Enter warp factor (0.1--{0}): ".format(max_warp_factor))
+        if not dist or dist < 0.1 or dist > max_warp_factor:
+            print "Invalid warp factor."
+            print
+            return
+    except:
+        print "INVALID WARP FACTOR"
         return
 
     print
@@ -648,8 +689,10 @@ def read_sector(i, j):
 
 
 def short_range_scan():
-    sleep(3)
-    clearConsole()
+#    sleep(3)
+#    print"\033[H"   cursor home
+#    clearConsole()
+    clearScreenTop()
     global game
     quadrant = game.quadrants[game.quadrant_y][game.quadrant_x]
     quadrant.scanned = True
@@ -681,7 +724,7 @@ def print_sector(quadrant):
     print " └────────────────────────┘"
 
     if quadrant.klingons > 0:
-        print
+#        print
         print "Condition RED: Klingon ship{0} detected.".format("" if quadrant.klingons == 1 else "s")
         if game.shield_level == 0 and not game.docked:
             print "* WARNING: SHIELDS ARE DOWN! *"
@@ -771,6 +814,18 @@ def clearConsole():
     if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
         command = 'cls'
     os.system(command)
+
+def clearScreenTop():
+    print"\033[H"
+    for i in range(13):
+        print"                                         "
+    print"\033[H"
+
+def clearStatusLines():
+    print"\033[14;0f"
+    for i in range(12):
+        print"                                                     "
+    print"\033[14;0f"
 
 def show_help():
     print '''
