@@ -47,11 +47,11 @@ Changes made so far
 - docked status shown as 'D'
 - removed random system damage, eg for using the computer too much
 - added inverse video for status D & cumulative map current quadrant, blink for status R using ANSI escape sequences
+- exception handling eg for torpedo firing direction when you press enter or type a letter, navigation and phaser energy
 
 
 To do list
 ==========
-- exception handling eg for torpedo firing direction when you press enter or type a letter
 - sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
 - 2 digit stardates not 4
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
