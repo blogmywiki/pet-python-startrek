@@ -88,7 +88,7 @@ def run():
         initialize_game()
         print_mission()
         generate_sector()
-        print_strings(commandStrings)
+#        print_strings(commandStrings)
         sleep(5)
         clearConsole()
         while game.energy > 0 and not game.destroyed and game.klingons > 0 and game.time_remaining > 0:
@@ -104,35 +104,35 @@ def print_game_status():
         print
         print
         print
-        sleep(3)
+        sleep(5)
     elif game.energy == 0:
         print "MISSION FAILED: ENTERPRISE RAN OUT OF ENERGY."
         print
         print
         print
-        sleep(3)
+        sleep(5)
     elif game.klingons == 0:
         print "MISSION ACCOMPLISHED: ALL KLINGON SHIPS DESTROYED. WELL DONE!!!"
         print
         print
         print
-        sleep(3)
+        sleep(5)
     elif game.time_remaining == 0:
         print "MISSION FAILED: ENTERPRISE RAN OUT OF TIME."
         print
         print
         print
-        sleep(3)
+        sleep(5)
 
 
 def command_prompt():
     # clear command line
-    print"\033[12;0f"
-    print"                                                  "
-    print"\033[A\033[A"
-    command = raw_input("COMMAND ? ").strip().lower()
+    print"\033[12;0f" # goto line 12
+#    print"                                                  "
+#    print"\033[A\033[A"
+    command = raw_input("COMMAND ?  ").strip().lower()
     clearStatusLines()
-    print
+    print"\033[13;0f" # goto line 14
     if command == "nav":
         navigation()
     elif command == "srs":
@@ -155,7 +155,6 @@ def command_prompt():
         display_galactic_record()
     else:
         print_strings(commandStrings)
-#        command_prompt()
 
 
 def computer_controls():
@@ -408,10 +407,9 @@ def distance(x1, y1, x2, y2):
 
 def long_range_scan():
     global game
-    sb = ""
+    sb = "              "
     for i in range(game.quadrant_y - 1, game.quadrant_y+2):  # quadrantY + 1 ?
         for j in range(game.quadrant_x - 1, game.quadrant_x+2):  # quadrantX + 1?
-            sb += " "
             klingon_count = 0
             starbase_count = 0
             star_count = 0
@@ -424,10 +422,9 @@ def long_range_scan():
             sb = sb + \
                 "{0}{1}{2} ".format(klingon_count, starbase_count, star_count)
         print sb
-        sb = ""
-    print"\033[A\033[A\033[A\033[A\033[A\033[A"
-    print"\033[K\033[A"
-#    command_prompt()
+        sb = "              "
+#    print"\033[A\033[A\033[A\033[A\033[A\033[A"
+#    print"\033[K\033[A"
 
 
 
@@ -514,10 +511,11 @@ def navigation():
     try:
         direction = input_double("Enter course (1.0--8.9): ")
         if not direction or direction < 1.0 or direction > 9.0:
-            print "Invalid course."
             print
+            print "INVALID COURSE"
             return
     except:
+        print
         print "INVALID COURSE"
         return
 
@@ -525,8 +523,7 @@ def navigation():
         dist = input_double(
             "Enter warp factor (0.1--{0}): ".format(max_warp_factor))
         if not dist or dist < 0.1 or dist > max_warp_factor:
-            print "Invalid warp factor."
-            print
+            print "INVALID WARP FACTOR"
             return
     except:
         print "INVALID WARP FACTOR"
@@ -572,7 +569,7 @@ def navigation():
                 game.sector_y = last_sect_y
                 game.sector[game.sector_y][game.sector_x] = sector_type.enterprise
                 print "Encountered obstacle within quadrant."
-                print
+#                print
                 obstacle = True
                 break
             last_sect_x = sect_x
@@ -690,14 +687,15 @@ def read_sector(i, j):
 
 def short_range_scan():
 #    sleep(3)
-#    print"\033[H"   cursor home
 #    clearConsole()
     clearScreenTop()
+#    clearStatusLines()
+    print"\033[H"   #cursor home
     global game
     quadrant = game.quadrants[game.quadrant_y][game.quadrant_x]
     quadrant.scanned = True
     print_sector(quadrant)
-    print
+
 
 
 def print_sector(quadrant):
@@ -760,7 +758,7 @@ def print_mission():
     print "\n\n\n\nYOU MUST DESTROY {0} KLINGONS\nIN  {1}  STARDATES.\n\n\nYOU HAVE {2} STARBASES.\n\n".format(
         game.klingons, game.time_remaining, game.starbases)
     sleep(3)
-    print
+
 
 
 def initialize_game():
@@ -817,15 +815,15 @@ def clearConsole():
 
 def clearScreenTop():
     print"\033[H"
-    for i in range(13):
-        print"                                         "
+    for i in range(12):
+        print"                                                     "
     print"\033[H"
 
 def clearStatusLines():
-    print"\033[14;0f"
+    print"\033[13;0f"
     for i in range(12):
         print"                                                     "
-    print"\033[14;0f"
+#    print"\033[14;0f"
 
 def show_help():
     print '''
