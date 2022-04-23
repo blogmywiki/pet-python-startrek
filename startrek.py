@@ -393,9 +393,7 @@ def klingons_attack():
                 if game.shield_level < 0:
                     game.shield_level = 0
                     game.destroyed = True
-                print "Enterprise hit by ship at sector [{0},{1}]. Shields dropped to {2}.".format(
-                    ship.sector_x + 1, ship.sector_y + 1, game.shield_level
-                )
+                print "ENTERPRISE HIT:SHIELDS DOWN {0} UNITS!".format(int(delivered_energy))
                 if game.shield_level == 0:
                     return True
         return True
