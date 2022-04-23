@@ -363,10 +363,13 @@ def shield_controls():
     global game
     max_transfer = game.energy + game.shield_level
     print "YOU HAVE {0} UNITS AVAILABLE.".format(max_transfer)
-    transfer = int(input("HOW MANY UNITS TO SHIELDS? "))
-    if not transfer or transfer < 1 or transfer > max_transfer:
+    try:
+        transfer = int(input("HOW MANY UNITS TO SHIELDS? "))
+    except:
         print "INVALID AMOUNT OF ENERGY."
-        print
+        return
+    if transfer < 0 or transfer > max_transfer:
+        print "INVALID AMOUNT OF ENERGY."
         return
     game.energy += game.shield_level
     game.shield_level = transfer
@@ -722,12 +725,12 @@ def print_sector(quadrant):
     print " └────────────────────────┘"
 
     if quadrant.klingons > 0:
-#        print
-        print "Condition RED: Klingon ship{0} detected.".format("" if quadrant.klingons == 1 else "s")
+        print
+#        print "Condition RED: Klingon ship{0} detected.".format("" if quadrant.klingons == 1 else "s")
         if game.shield_level == 0 and not game.docked:
-            print "* WARNING: SHIELDS ARE DOWN! *"
+            print "* WARNING: SHIELDS ARE DOWN! *                             "
         elif game.shield_level < 100 and not game.docked:
-            print "* SHIELDS DANGEROUSLY LOW! *"
+            print "* SHIELDS DANGEROUSLY LOW! *                               "
     elif game.energy < 300:
         print
         print "Condition YELLOW: Low energy level."
@@ -781,7 +784,6 @@ def initialize_game():
     game.shield_level = 500
     game.docked = False
 
-
     for i in range(8):
         for j in range(8):
             quadrant = Quadrant()
@@ -807,11 +809,13 @@ def print_strings(string_list):
         print string
     print
 
+
 def clearConsole():
     command = 'clear'
     if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
         command = 'cls'
     os.system(command)
+
 
 def clearScreenTop():
     print"\033[H"
@@ -819,11 +823,13 @@ def clearScreenTop():
         print"                                                     "
     print"\033[H"
 
+
 def clearStatusLines():
     print"\033[13;0f"
     for i in range(12):
         print"                                                     "
 #    print"\033[14;0f"
+
 
 def show_help():
     print '''
