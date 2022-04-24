@@ -48,14 +48,15 @@ Changes made so far
 - removed random system damage, eg for using the computer too much
 - added inverse video for status D & cumulative map current quadrant, blink for status R using ANSI escape sequences
 - exception handling eg for torpedo firing direction when you press enter or type a letter, navigation and phaser energy
+- sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
+- 2 digit stardates not 4 - shows time remaining removing need for status menu item
+- basic polar co-ordinate map added when moving or firing
+- single letter commands
 
 
 To do list
 ==========
-- sort out how program flow deals with showing SRS or cumulative galaxy map with command prompt
-- 2 digit stardates not 4
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
-- translate to Python 3
 - add proper help
 - in PET version if you hit a star you get sent through a space warp, sheilds are stripped - possibly dropped in a random location?
 - check navigation, probably needs a total re-write; PET version uses normal angles with 0 being East, 90 North.
@@ -64,5 +65,4 @@ To do list
 - same for firing torpedos
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
 - PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
-- single letter commands
-- more reverse video as required using ANSI escape sequences
+- translate to Python 3
