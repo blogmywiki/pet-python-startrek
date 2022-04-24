@@ -6,8 +6,7 @@
 # based on https://github.com/cosmicr/startrek1971
 
 from math import atan2, pi, sqrt, cos, sin
-import random
-import os
+import random, os, sys
 from time import sleep
 
 
@@ -89,7 +88,7 @@ def run():
         print_mission()
         generate_sector()
 #        print_strings(commandStrings)
-        sleep(5)
+#        sleep(5)
         clearConsole()
         while game.energy > 0 and not game.destroyed and game.klingons > 0 and game.time_remaining > 0:
             short_range_scan()
@@ -104,25 +103,25 @@ def print_game_status():
         print
         print
         print
-        sleep(5)
+        sleep(10)
     elif game.energy == 0:
         print "MISSION FAILED: ENTERPRISE RAN OUT OF ENERGY."
         print
         print
         print
-        sleep(5)
+        sleep(10)
     elif game.klingons == 0:
         print "MISSION ACCOMPLISHED: ALL KLINGON SHIPS DESTROYED. WELL DONE!!!"
         print
         print
         print
-        sleep(5)
+        sleep(10)
     elif game.time_remaining == 0:
         print "MISSION FAILED: ENTERPRISE RAN OUT OF TIME."
         print
         print
         print
-        sleep(5)
+        sleep(10)
 
 
 def command_prompt():
@@ -307,11 +306,10 @@ def display_galactic_record():
             else:
                 sb += "*** "
         sb += "│"
-        print sb
+        print_slow(sb)
         sb = ""
     print " └────────────────────────────────┘"
     print
-#    sleep(10)
     command_prompt()
 
 
@@ -422,7 +420,7 @@ def long_range_scan():
                 star_count = quadrant.stars
             sb = sb + \
                 "{0}{1}{2} ".format(klingon_count, starbase_count, star_count)
-        print sb
+        print_slow(sb)
         sb = "              "
 #    print"\033[A\033[A\033[A\033[A\033[A\033[A"
 #    print"\033[K\033[A"
@@ -840,6 +838,13 @@ def show_help():
     6    7    8
     '''
 
+def print_slow(str):
+    for letter in str:
+        sys.stdout.write(letter)
+        sys.stdout.flush()
+        sleep(0.01)
+    sys.stdout.write('\n')
+    sys.stdout.flush()
 
 if __name__ == '__main__':
     run()
