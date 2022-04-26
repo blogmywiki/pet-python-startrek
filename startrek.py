@@ -91,6 +91,7 @@ def run():
 def print_game_status():
     global game
     if game.destroyed:
+        clearConsole()
         print "THE ENTERPRISE HAS BEEN\nDESTROYED"
         sleep(10)
     elif game.energy == 0:
@@ -179,7 +180,7 @@ def compute_direction(x1, y1, x2, y2):
 def navigation_calculator():
     global game
     print
-    print "Enterprise located in quadrant [%s,%s]." % (game.quadrant_x + 1, game.quadrant_y + 1)
+    print "Enterprise located in quadrant [%s,%s]." % (game.quadrant_x, game.quadrant_y)
     print
     try:
         quad_x = input_double("Enter destination quadrant X (1--8): ")
@@ -215,7 +216,7 @@ def starbase_calculator():
     global game
     print
     if game.quadrants[game.quadrant_y][game.quadrant_x].starbase:
-        print "Starbase in sector [%s,%s]." % (game.starbase_x + 1, game.starbase_y + 1)
+        print "Starbase in sector [%s,%s]." % (game.starbase_x, game.starbase_y)
         print "Direction: {0:1.2f}".format(
             compute_direction(game.sector_x, game.sector_y, game.starbase_x, game.starbase_y)
         )
@@ -236,7 +237,7 @@ def photon_torpedo_calculator():
     for ship in game.klingon_ships:
         text = "Direction {2:1.2f}: Klingon ship in sector [{0},{1}]."
         print text.format(
-            ship.sector_x + 1, ship.sector_y + 1,
+            ship.sector_x, ship.sector_y,
             compute_direction(game.sector_x, game.sector_y, ship.sector_x, ship.sector_y))
     print
 
@@ -247,11 +248,11 @@ def display_galactic_record():
     clearConsole()
     print
     sb = ""
-    print "   1   2   3   4   5   6   7   8"
+    print "   0   1   2   3   4   5   6   7"
     print " ┌────────────────────────────────┐ "
 
     for i in range(8):
-        sb = str(i+1)
+        sb = str(i)
         sb += "│"
         for j in range(8):
             klingon_count = 0
@@ -303,12 +304,12 @@ def phaser_controls():
             delivered_energy = phaser_energy * (1.0 - dist / 11.3)
             ship.shield_level -= int(delivered_energy)
             if ship.shield_level <= 0:
-                print "KLINGON SHIP DESTROYED AT SECTOR [{0},{1}].".format(ship.sector_x + 1, ship.sector_y + 1)
+                print "KLINGON SHIP DESTROYED AT SECTOR [{0},{1}].".format(ship.sector_x, ship.sector_y)
                 explosion(ship.sector_x,ship.sector_y)
                 destroyed_ships.append(ship)
             else:
                 print "HIT SHIP AT SECTOR [{0},{1}].\nKLINGON SHIELD STRENGTH DROPPED TO {2}.".format(
-                    ship.sector_x + 1, ship.sector_y + 1, ship.shield_level
+                    ship.sector_x, ship.sector_y, ship.shield_level
                 )
         for ship in destroyed_ships:
             game.quadrants[game.quadrant_y][game.quadrant_x].klingons -= 1
@@ -346,7 +347,7 @@ def klingons_attack():
         for ship in game.klingon_ships:
             if game.docked:
                 print "Enterprise hit by ship at sector [{0},{1}]. No damage due to starbase shields.".format(
-                    ship.sector_x + 1, ship.sector_y + 1
+                    ship.sector_x, ship.sector_y
                 )
             else:
                 dist = distance(
@@ -428,12 +429,12 @@ def torpedo_control():
         new_x = int(round(x))
         new_y = int(round(y))
         if last_x != new_x or last_y != new_y:
-            print "  [{0},{1}]".format(new_x + 1, new_y + 1)
+            print "  [{0},{1}]".format(new_x, new_y)
             last_x = new_x
             last_y = new_y
         for ship in game.klingon_ships:
             if ship.sector_x == new_x and ship.sector_y == new_y:
-                print "KLINGON SHIP DESTROYED AT SECTOR [{0},{1}].".format(ship.sector_x + 1, ship.sector_y + 1)
+                print "KLINGON SHIP DESTROYED AT SECTOR [{0},{1}].".format(ship.sector_x, ship.sector_y)
                 explosion(ship.sector_x,ship.sector_y)
                 game.sector[ship.sector_y][ship.sector_x] = sector_type.empty
                 game.klingons -= 1
@@ -448,14 +449,14 @@ def torpedo_control():
             game.quadrants[game.quadrant_y][game.quadrant_x].starbase = False
             game.sector[new_y][new_x] = sector_type.empty
             explosion(new_x,new_y)
-            print "CONGRATULATIONS,\nYOU DESTROYED A STARBASE AT [{0},{1}]!".format(new_x + 1, new_y + 1)
+            print "CONGRATULATIONS,\nYOU DESTROYED A STARBASE AT [{0},{1}]!".format(new_x, new_y)
             print "YOU HAVE {0} STARBASES LEFT. GOOD LUCK!!".format(game.starbases)
             sleep(3)
             hit = True
             break
         elif game.sector[new_y][new_x] == sector_type.star:
             print "TORPEDO CAPTURED BY STAR'S\nGRAVITATIONAL FIELD AT SECTOR [{0},{1}].".format(
-                new_x + 1, new_y + 1
+                new_x, new_y
             )
             hit = True
             break
@@ -676,16 +677,16 @@ def print_sector(quadrant):
         game.condition = "\033[7mD\033[0m"  # reverse
 
     sb = "│"
-    print "   1  2  3  4  5  6  7  8"
+    print "   0  1  2  3  4  5  6  7"
     print " ┌────────────────────────┐ "
-    print_sector_row("1"+sb, 0, "│ STARDATE {0}".format(game.time_remaining))
-    print_sector_row("2"+sb, 1, "│ CONDITION {0}".format(game.condition))
-    print_sector_row("3"+sb, 2, "│ QUAD.   {0},{1}".format(game.quadrant_x + 1, game.quadrant_y + 1))
-    print_sector_row("4"+sb, 3, "│ SECTOR  {0},{1}".format(game.sector_x + 1, game.sector_y + 1))
-    print_sector_row("5"+sb, 4, "│ ENERGY {0}".format(game.energy))
-    print_sector_row("6"+sb, 5, "│ P.TORP  {0}".format(game.photon_torpedoes))
-    print_sector_row("7"+sb, 6, "│ SHIELDS {0}".format(game.shield_level))
-    print_sector_row("8"+sb, 7, "│ KLINGONS {0}".format(game.klingons))
+    print_sector_row("0"+sb, 0, "│ STARDATE {0}".format(game.time_remaining))
+    print_sector_row("1"+sb, 1, "│ CONDITION {0}".format(game.condition))
+    print_sector_row("2"+sb, 2, "│ QUAD.   {0},{1}".format(game.quadrant_x, game.quadrant_y))
+    print_sector_row("3"+sb, 3, "│ SECTOR  {0},{1}".format(game.sector_x, game.sector_y))
+    print_sector_row("4"+sb, 4, "│ ENERGY {0}".format(game.energy))
+    print_sector_row("5"+sb, 5, "│ P.TORP  {0}".format(game.photon_torpedoes))
+    print_sector_row("6"+sb, 6, "│ SHIELDS {0}".format(game.shield_level))
+    print_sector_row("7"+sb, 7, "│ KLINGONS {0}".format(game.klingons))
     print " └────────────────────────┘"
 
     if quadrant.klingons > 0:
