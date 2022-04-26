@@ -304,9 +304,10 @@ def phaser_controls():
             ship.shield_level -= int(delivered_energy)
             if ship.shield_level <= 0:
                 print "KLINGON SHIP DESTROYED AT SECTOR [{0},{1}].".format(ship.sector_x + 1, ship.sector_y + 1)
+                explosion(ship.sector_x,ship.sector_y)
                 destroyed_ships.append(ship)
             else:
-                print "Hit ship at sector [{0},{1}]. KLINGON SHIELD STRENGTH DROPPED TO {2}.".format(
+                print "HIT SHIP AT SECTOR [{0},{1}].\nKLINGON SHIELD STRENGTH DROPPED TO {2}.".format(
                     ship.sector_x + 1, ship.sector_y + 1, ship.shield_level
                 )
         for ship in destroyed_ships:
@@ -433,6 +434,7 @@ def torpedo_control():
         for ship in game.klingon_ships:
             if ship.sector_x == new_x and ship.sector_y == new_y:
                 print "KLINGON SHIP DESTROYED AT SECTOR [{0},{1}].".format(ship.sector_x + 1, ship.sector_y + 1)
+                explosion(ship.sector_x,ship.sector_y)
                 game.sector[ship.sector_y][ship.sector_x] = sector_type.empty
                 game.klingons -= 1
                 game.klingon_ships.remove(ship)
@@ -445,8 +447,10 @@ def torpedo_control():
             game.starbases -= 1
             game.quadrants[game.quadrant_y][game.quadrant_x].starbase = False
             game.sector[new_y][new_x] = sector_type.empty
+            explosion(new_x,new_y)
             print "CONGRATULATIONS,\nYOU DESTROYED A STARBASE AT [{0},{1}]!".format(new_x + 1, new_y + 1)
             print "YOU HAVE {0} STARBASES LEFT. GOOD LUCK!!".format(game.starbases)
+            sleep(3)
             hit = True
             break
         elif game.sector[new_y][new_x] == sector_type.star:
@@ -707,7 +711,7 @@ def print_sector_row(sb, row, suffix):
         elif game.sector[row][column] == sector_type.klingon:
             sb += " K "
         elif game.sector[row][column] == sector_type.star:
-            sb += " * "
+            sb += " ● "
         elif game.sector[row][column] == sector_type.starbase:
             sb += " B "
     if suffix is not None:
@@ -806,6 +810,25 @@ def print_slow(str):
         sleep(0.015)
     sys.stdout.write('\n')
     sys.stdout.flush()
+
+def explosion(x,y):
+    print "\033[{0};{1}f\033[7mK\033[0m".format(y + 4, x*3 + 4)
+    sleep(0.2)
+    print "\033[{0};{1}f○".format(y + 4, x*3 + 4)
+    sleep(0.2)
+    print "\033[{0};{1}f●".format(y + 4, x*3 + 4)
+    sleep(0.2)
+    print "\033[{0};{1}f╋".format(y + 4, x*3 + 4)
+    sleep(0.2)
+    print "\033[{0};{1}f▦".format(y + 4, x*3 + 4)
+    sleep(0.2)
+    print "\033[{0};{1}f╳".format(y + 4, x*3 + 4)
+    sleep(0.2)
+    print "\033[{0};{1}f*".format(y + 4, x*3 + 4)
+    sleep(0.2)
+    print "\033[{0};{1}f\033[7m \033[0m".format(y + 4, x*3 + 4)
+    sleep(0.2)
+
 
 if __name__ == '__main__':
     run()
