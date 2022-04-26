@@ -18,12 +18,35 @@ You can read more about the PET Star Trek and why I think a Tramiel was involved
 
 You can read about the 1971 and 1976 BASIC versions and their port to C# here: https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game
 
+What's different and what's the same and why
+============================================
+
+- Commodore PET classic Star Trek plays in 'real time', so if you take too long to enter a command, you lose time and energy etc. My Python version never will work like that because I want to be able to play a game a turn at a time, possibly over a day or two.
+
+- Phasers. I inherited phasers from Super Star Trek. I like phasers. I even think I remember using them, but they're not in the version of PET Star Trek I managed to find. Anyway, I'm keeping them.
+
+- Angles. This version uses horrible polar co-ordinates from 1 to 9. I will try to change this to match the normal 0-359 degrees used by PET Star Trek.
+
+- Access computer. Because the angles are so awful, I'm keeping the navigation and torpedo guidance computer for now.
+
 How to play
 ===========
 
-I'll add instructions once the gameplay is properly merged and stable. At the time of writing it's closer to https://www.codeproject.com/Articles/28228/Star-Trek-1971-Text-Game than to 1977 Commodore PET Star Trek.
+I'll add instructions once the gameplay is properly merged and stable.
 
-Try out a version of it in your browser here: https://trinket.io/library/trinkets/38adc68043
+Search the quadrants of the galaxy to find and destroy Klingon ships before you run out of time or energy.
+
+Use L to get a Long Range Scan of the adjacent quadrants. '369' would mean 3 Klingons, 6 star bases where you can refuel (you wish!) and 9 stars.
+
+C calls up the computer map of every explored quadrant.
+
+M to move. Use distance decimals like 0.1 to move inside a quadrant, whole numbers to move between quadrants.
+
+P to fire phasers - these need no guidance but use a lot of energy.
+
+T to fire photon torepedos. You need to specify an angle. You can use 'A' to access the computer and 'tor' to get the guidance computer to help you.
+
+Try out a very early version of it in your browser here: https://trinket.io/library/trinkets/38adc68043 - this is more like the Super Star Trek port I based this on.
 
 
 Changes made so far
@@ -52,19 +75,20 @@ Changes made so far
 - 2 digit stardates not 4 - shows time remaining removing need for status menu item
 - basic polar co-ordinate map added when moving or firing
 - single letter commands
+- line 11 pays tribute to Leonard Tramiel's hidden REM statement
 - stars shown as ● not * (something I find odd about the PET version, I guess they wanted to show off the graphics)
 - animate explosions
+- co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
 
 
 To do list
 ==========
-- co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
 - add proper help
 - in PET version if you hit a star you get sent through a space warp, sheilds are stripped - possibly dropped in a random location?
 - check navigation, probably needs a total re-write; PET version uses normal angles with 0 being East, 90 North.
 - if I fix navigation angles, I can lose the navigation computers
-- remove computer menu
 - same for firing torpedos
+- remove computer menu
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
 - PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
 - add animtion of moving, firing torpedoes
