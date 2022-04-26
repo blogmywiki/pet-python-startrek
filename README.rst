@@ -52,6 +52,8 @@ Changes made so far
 - 2 digit stardates not 4 - shows time remaining removing need for status menu item
 - basic polar co-ordinate map added when moving or firing
 - single letter commands
+- stars shown as ● not * (something I find odd about the PET version, I guess they wanted to show off the graphics)
+- animate explosions
 
 
 To do list
@@ -65,5 +67,5 @@ To do list
 - same for firing torpedos
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
 - PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
-- add animtion of moving, firing torpedoes, blowing up a Klingon ship
+- add animtion of moving, firing torpedoes
 - translate to Python 3
