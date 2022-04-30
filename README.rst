@@ -7,7 +7,7 @@ About
 
 In 2014 @cosmicr ported a C# version of the 1976 Super Star Trek BASIC game to Python 2.
 
-In 2022 I want a Python version of the 1977 Commodore PET version of the 1971 classic Star Trek game, so I can re-live 
+In 2022 I want a Python 3 version of the 1977 Commodore PET version of the 1971 classic Star Trek game, so I can re-live 
 my childhood in the console of whatever computer I'm using and not faff around with emulators and disk images.
 
 Rather than code it from scratch, I decided to fork @cosmicr's port, remove some of the functionality that comes with the Super Star Trek variant and make the game play more like the Commodore PET version.
@@ -33,6 +33,8 @@ How to play
 ===========
 
 I'll add instructions once the gameplay is properly merged and stable.
+
+Run startrek.py in a Python 3 environment - I've only tested this on Python 3.7.1 under MacOS.
 
 Search the quadrants of the galaxy to find and destroy Klingon ships before you run out of time or energy.
 
@@ -79,6 +81,7 @@ Changes made so far
 - stars shown as ● not * (something I find odd about the PET version, I guess they wanted to show off the graphics)
 - animate explosions
 - co-ordinates are 1-8 in Python Super Star Trek version, they were 0-7 in PET BASIC
+- tranlated to Python 3
 
 
 To do list
@@ -92,4 +95,3 @@ To do list
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
 - PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
 - add animtion of moving, firing torpedoes
-- translate to Python 3
