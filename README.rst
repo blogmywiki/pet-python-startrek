@@ -93,6 +93,5 @@ To do list
 - same for firing torpedos
 - remove computer menu
 - PET version used real time not turns for stardates, am inclined to leave it as turns but increment on each turn not when you move quadrant
-- PET version plays in 'real time', eg if you wait too long to type a fire command you'll be destroyed
 - add animtion of moving, firing torpedoes
-- translate to Python 3
+- translate to Python 3 - turns out this was harder than I expected for unexpected reasons around maths
