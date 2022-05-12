@@ -34,7 +34,7 @@ How to play
 
 I'll add instructions once the gameplay is properly merged and stable.
 
-Run startrek.py in a Python 2 environment - I've only tested this on Python 3.7.1 under MacOS.
+Run startrek.py in a Python 2 environment.
 
 Search the quadrants of the galaxy to find and destroy Klingon ships before you run out of time or energy.
 
